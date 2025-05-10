@@ -29,19 +29,18 @@ A simple Python script, `calendar_reminder.py`, that runs on a Raspberry Pi, fet
    ```
 
 ## Configuration
-1. Place your service account key JSON file in the project directory:
-   ```bash
-   mv /path/to/your-key.json ./your-service-account.json
-   ```
-2. Update the path in `calendar_reminder.py` to point to the actual location of your service account JSON file. Update the directory path as needed:
-   ```python
-   SERVICE_ACCOUNT_FILE = '/home/pi/path/to/your-service-account.json'  # update the path to your JSON file as needed
-   ```
-3. Export your Slack Webhook URL as an environment variable:
-   ```bash
-   echo 'export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/XXXX/YYYY/ZZZZ"' >> ~/.bashrc
-   source ~/.bashrc
-   ```
+
+### Calendar Sharing and Service Account Setup
+1. Share your Google Calendar with your service account’s email (found under `client_email` in your JSON key) and grant “See all event details” permission.
+2. Place your service account JSON key file in a secure location (e.g., the project root) and set the `GOOGLE_SERVICE_ACCOUNT_FILE` environment variable to its full path.
+3. If you are using a calendar other than the primary one, set the `CALENDAR_ID` environment variable to your calendar’s ID (e.g., `your.email@gmail.com`).
+
+### Environment Variables Examples
+```bash
+export GOOGLE_SERVICE_ACCOUNT_FILE="/path/to/your-key.json"
+export CALENDAR_ID="your.email@gmail.com"  # optional, defaults to 'primary'
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/XXX/YYY/ZZZ"
+```
 
 ## Usage
 Run the script manually to test:

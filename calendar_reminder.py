@@ -13,8 +13,8 @@ from googleapiclient.discovery import build
 # ——————————————
 # 設定
 # ——————————————
-SERVICE_ACCOUNT_FILE = ''    # サービスアカウントキーのパス
-CALENDAR_ID = 'primary'                                   # 共有したカレンダーID（通常 'primary'）
+SERVICE_ACCOUNT_FILE = os.environ.get('GOOGLE_SERVICE_ACCOUNT_FILE')  # サービスアカウントJSONファイルへのパス（環境変数で設定）
+CALENDAR_ID = os.environ.get('CALENDAR_ID', 'primary')   # カレンダーID（例: your.email@gmail.com）。環境変数で設定、未指定時は 'primary'
 SLACK_WEBHOOK_URL = os.environ.get('SLACK_WEBHOOK_URL')   # 環境変数に設定推奨
 TIMEZONE = 'Asia/Tokyo'
 # ——————————————
@@ -38,6 +38,7 @@ def fetch_todays_events(service):
         calendarId=CALENDAR_ID,
         timeMin=start_of_day.isoformat(),
         timeMax=end_of_day.isoformat(),
+        timeZone=TIMEZONE,
         singleEvents=True,
         orderBy='startTime'
     ).execute()
